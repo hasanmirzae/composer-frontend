@@ -54,7 +54,9 @@
     }
   },
   "defaults": {
+    "prefixInterfaces": false,
     "styleExt": "css",
-    "component": {}
+    "component": {
+    }
   }
 }

@@ -4,13 +4,15 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { ModuleComponent } from './module/module.component';
+import { ToolbarComponent } from './toolbar/toolbar.component';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    ModuleComponent
+    ModuleComponent,
+    ToolbarComponent
   ],
   imports: [
     BrowserModule, HttpClientModule

@@ -1,27 +1,30 @@
 import {Component, OnInit} from '@angular/core';
 import * as d3 from 'd3';
-import {ModuleService} from './shared/module.service';
+import {ModuleService} from '../shared/module.service';
+import { Globals } from '../globals';
 
 @Component({
   selector: 'app-module',
   templateUrl: './module.component.html',
   styleUrls: ['./module.component.css'],
-  providers: [ModuleService]
+  providers: [ModuleService, Globals]
 })
 export class ModuleComponent implements OnInit {
 
-  constructor(private moduleService: ModuleService) {}
+  module: any = {};
+  
+  constructor(private moduleService: ModuleService,private globals: Globals) {}
 
 
 
   ngOnInit() {
     this.moduleService
-      .getData('jlkjl')
+      .getData(this.globals.activeModule)
       .subscribe(this.init.bind(this), e => console.error);
   }
 
   getTitle(node) {
-    return node.groupId + '\n' + node.artifactId + '\n' + node.version;
+    return node.groupId + '\n' + node.artifactId + '\n' + node.version+'\n'+node.uuid;
   }
   generateCoordinates(data): void {
     data.nodes.forEach(node => {
@@ -32,10 +35,11 @@ export class ModuleComponent implements OnInit {
   
 
   init(data) {
+    this.module = data;
     this.generateCoordinates(data);
     const RECT_SIZE = 40; // a/2
     const c10 = d3.scale.category10();
-    const svg = d3.select("div.container")
+    const svg = d3.select("#module-window")
       .append("svg")
       .attr("width", 1200)
       .attr("height", 800);

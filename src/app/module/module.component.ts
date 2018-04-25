@@ -12,12 +12,27 @@ export class ModuleComponent implements OnInit {
 
   constructor(private moduleService: ModuleService) {}
 
+
+
+  ngOnInit() {
+    this.moduleService
+      .getData('jlkjl')
+      .subscribe(this.init.bind(this), e => console.error);
+  }
+
   getTitle(node) {
     return node.groupId + '\n' + node.artifactId + '\n' + node.version;
   }
+  generateCoordinates(data): void {
+    data.nodes.forEach(node => {
+      node.x = Math.round(Math.random() * 200 + 50);
+      node.y = Math.round(Math.random() * 200 + 10);
+    });
+  }
+  
 
-  ngOnInit() {
-    const data = this.moduleService.getData();
+  init(data) {
+    this.generateCoordinates(data);
     const RECT_SIZE = 40; // a/2
     const c10 = d3.scale.category10();
     const svg = d3.select("div.container")
@@ -31,7 +46,7 @@ export class ModuleComponent implements OnInit {
       .attr("id", "arrow")
       .attr("markerWidth", RECT_SIZE)
       .attr("markerHeight", RECT_SIZE)
-      .attr("refX", RECT_SIZE + 10)
+      .attr("refX", RECT_SIZE/2.5)
       .attr("refY", 5)
       .attr("orient", "auto")
       .attr("markerUnits", "strokeWidth")
@@ -39,20 +54,6 @@ export class ModuleComponent implements OnInit {
       .attr("d", "M 0 0 L 10 5 L 0 10 z")
       .attr("fill", "#f00");
 
-    const drag = d3.behavior.drag()
-      .on("drag", function(d, i) {
-        d.x += d3.event.dx
-        d.y += d3.event.dy
-        //        d3.select(this).attr("x", d.x - RECT_SIZE).attr("y", d.y - RECT_SIZE);
-        d3.select(this).attr("transform", d => "translate(" + (d.x - RECT_SIZE) + "," + (d.y - RECT_SIZE) + ")");
-        links.each(function(l, li) {
-          if (l.source == i) {
-            d3.select(this).attr("x1", d.x).attr("y1", d.y);
-          } else if (l.target == i) {
-            d3.select(this).attr("x2", d.x).attr("y2", d.y);
-          }
-        });
-      });
 
     const links = svg.selectAll("link")
       .data(data.links)
@@ -61,23 +62,35 @@ export class ModuleComponent implements OnInit {
       .attr("class", "link")
       .attr("marker-end", "url(#arrow)")
       .attr("x1", function(l) {
-        var sourceNode = data.nodes.filter((d, i) => {
-          return d.id == l.source;
+        var sourceNode = data.nodes.filter(d => {
+          return d.uuid === l.source;
         })[0];
-
+        d3.select(this).attr("source",sourceNode.uuid);
         d3.select(this).attr("y1", sourceNode.y);
         return sourceNode.x;
       })
       .attr("x2", function(l) {
-        var targetNode = data.nodes.filter((d, i) => {
-          return d.id == l.target
+        var targetNode = data.nodes.filter(d => {
+          return d.uuid === l.target;
         })[0];
-
+        d3.select(this).attr("target",targetNode.uuid);
         d3.select(this).attr("y2", targetNode.y);
         return targetNode.x;
       })
       .attr("fill", "none")
-      .attr("stroke", "white");
+      .attr("stroke", "white")
+      .attr("stroke-width","6px");
+
+    const drag = d3.behavior.drag()
+      .on("drag", function(d, i) {
+        d.x += d3.event.dx;
+        d.y += d3.event.dy;
+        d3.select(this).attr("transform", d => "translate(" + (d.x - RECT_SIZE) + "," + (d.y - RECT_SIZE) + ")");
+        d3.select("line[target="+d.uuid+"]").attr("x2", d.x).attr("y2", d.y);
+        d3.select("line[source="+d.uuid+"]").attr("x1", d.x).attr("y1", d.y);
+      });
+
+
 
     const nodes = svg.selectAll("node")
       .data(data.nodes)

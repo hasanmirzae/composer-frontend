@@ -1,7 +1,7 @@
 import { ModuleComponent } from '../module/module.component';
 import { Component, OnInit, Input, HostListener } from '@angular/core';
 import {ModuleService} from '../shared/module.service';
-
+import { globals } from '../globals';
 
 @Component({
   selector: 'app-toolbar',
@@ -13,6 +13,8 @@ export class ToolbarComponent implements OnInit {
 
   modules: any = [];
   selectedModule: string;
+  linkFrom: string;
+  linkTo: string;
   
   @Input() moduleComponent: ModuleComponent;
   
@@ -34,7 +36,31 @@ export class ToolbarComponent implements OnInit {
   
   addModule(){
     this.service.insertModule(this.selectedModule)
-    .subscribe(console.log,console.error, null);
+    .subscribe(() => this.moduleComponent.update({uuid: globals.activeModule}), console.error, null);
+  }
+  
+  save(){
+    this.service.save()
+    .subscribe(console.log,console.error,null);
+  }
+  
+  onSelectFrom(event){
+    this.linkFrom = event.target.value;
+    console.log(this.linkFrom);
+  }
+  
+  onSelectTo(event){
+    this.linkTo = event.target.value;
+    console.log(this.linkTo);
+  }
+  
+  addLink(){
+      console.log('before addLink() called')
+    if (this.linkFrom && this.linkTo && (this.linkFrom !== this.linkTo)){
+      console.log('addLink() called')
+      this.service.addLink(this.linkFrom, this.linkTo)
+        .subscribe(() => this.moduleComponent.update({uuid: globals.activeModule}),console.error, null);
+    }
   }
   
 

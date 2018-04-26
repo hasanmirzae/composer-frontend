@@ -31,6 +31,14 @@ export class ModuleService {
 
   insertModule(uuid: string){
     // uuid of module to be inserted
-    return this.http.put(environment.server.address + '/modules/add?target='+globals.activeModule+'&selected='+uuid,{},{method:'PUT'});
+    return this.http.put(environment.server.address + '/modules/add/'+uuid,{});
+  }
+  
+  save(){
+    return this.http.post(environment.server.address + '/modules/save', {});
+  }
+  
+  addLink(from: string, to: string){
+    return this.http.post(environment.server.address + '/modules/links', {source: from, target: to});
   }
 }

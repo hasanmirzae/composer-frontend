@@ -4,6 +4,9 @@
 			<button (click)="initNewModule()">Init New Module</button>
 		</div>
 		<div class="col-sm">
+			<button (click)="save()">Save</button>
+		</div>
+		<div class="col-sm">
 			<button type="button" (click)="addModule()">Add module</button>
 		</div>
 		<div class="col-sm">
@@ -12,4 +15,23 @@
 			</select>
 		</div>
 	</div>
+		<div class="row">
+		<div class="col-sm">
+			<button (click)="addLink()">Add link</button>
+		</div>
+		<div class="col-sm">
+			<span>From</span>
+			<select class="form-control" (change)="onSelectFrom($event)" >
+				<option *ngFor="let m of modules"  [value]="m.uuid">{{m.simpleName+'|'+m.uuid}}</option>
+			</select>
+		</div>
+		<div class="col-sm">
+			<span>To</span>
+			<select class="form-control" (change)="onSelectTo($event)" >
+				<option *ngFor="let m of modules"  [value]="m.uuid">{{m.simpleName+'|'+m.uuid}}</option>
+			</select>
+		</div>
+		<div class="col-sm"></div>
+	</div>
+	
 </div>

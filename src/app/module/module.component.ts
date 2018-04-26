@@ -21,7 +21,7 @@ export class ModuleComponent implements OnInit {
   
   }
   
-  update(model: any){
+  update(model){
     this.moduleService
       .getData(model.uuid)
       .subscribe(this.init.bind(this), e => console.error);
@@ -43,7 +43,6 @@ export class ModuleComponent implements OnInit {
   init(data) {
     this.model = data;
     globals.activeModule = data.uuid;
-    console.log(globals)
     this.generateCoordinates(data);
     const RECT_SIZE = 40; // a/2
     const c10 = d3.scale.category10();
@@ -111,6 +110,7 @@ export class ModuleComponent implements OnInit {
       .append("g")
       .attr("transform", d => "translate(" + (d.x - RECT_SIZE) + "," + (d.y - RECT_SIZE) + ")")
       .call(drag);
+    
 
     // add title
     nodes

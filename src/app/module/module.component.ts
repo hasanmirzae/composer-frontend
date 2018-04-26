@@ -1,31 +1,37 @@
 import {Component, OnInit} from '@angular/core';
 import * as d3 from 'd3';
 import {ModuleService} from '../shared/module.service';
-import { Globals } from '../globals';
+import { globals } from '../globals';
 
 @Component({
   selector: 'app-module',
   templateUrl: './module.component.html',
   styleUrls: ['./module.component.css'],
-  providers: [ModuleService, Globals]
+  providers: [ModuleService]
 })
 export class ModuleComponent implements OnInit {
 
-  module: any = {};
+  model: any = {};
   
-  constructor(private moduleService: ModuleService,private globals: Globals) {}
+  constructor(private moduleService: ModuleService) {}
 
 
 
   ngOnInit() {
+  
+  }
+  
+  update(model: any){
     this.moduleService
-      .getData(this.globals.activeModule)
+      .getData(model.uuid)
       .subscribe(this.init.bind(this), e => console.error);
   }
 
   getTitle(node) {
     return node.groupId + '\n' + node.artifactId + '\n' + node.version+'\n'+node.uuid;
   }
+  
+  
   generateCoordinates(data): void {
     data.nodes.forEach(node => {
       node.x = Math.round(Math.random() * 200 + 50);
@@ -35,10 +41,13 @@ export class ModuleComponent implements OnInit {
   
 
   init(data) {
-    this.module = data;
+    this.model = data;
+    globals.activeModule = data.uuid;
+    console.log(globals)
     this.generateCoordinates(data);
     const RECT_SIZE = 40; // a/2
     const c10 = d3.scale.category10();
+    d3.select("#module-window").select("svg").remove();
     const svg = d3.select("#module-window")
       .append("svg")
       .attr("width", 1200)

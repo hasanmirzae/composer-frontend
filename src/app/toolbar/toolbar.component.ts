@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { ModuleComponent } from '../module/module.component';
+import { Component, OnInit, Input, HostListener } from '@angular/core';
 import {ModuleService} from '../shared/module.service';
+
 
 @Component({
   selector: 'app-toolbar',
@@ -12,6 +14,8 @@ export class ToolbarComponent implements OnInit {
   modules: any = [];
   selectedModule: string;
   
+  @Input() moduleComponent: ModuleComponent;
+  
   constructor(private service: ModuleService) { }
 
   ngOnInit() {
@@ -21,11 +25,11 @@ export class ToolbarComponent implements OnInit {
   
   initNewModule(){
     this.service.initNewModule()
-    .subscribe(console.log,console.error,null);
+    .subscribe(m => this.moduleComponent.update(m),console.error,null);
   }
   
-  onSelectModule(module: any){
-    this.selectedModule = module.uuid;
+  onSelectModule(event){
+    this.selectedModule = event.target.value;
   }
   
   addModule(){

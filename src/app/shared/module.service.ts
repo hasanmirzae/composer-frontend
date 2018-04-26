@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from 'environments/environment';
+import { globals } from '../globals';
 
 @Injectable()
 export class ModuleService {
@@ -12,7 +13,16 @@ export class ModuleService {
   }
   
   initNewModule(){
-    return this.http.post(environment.server.address + '/modules/new',{});
+    // TODO get object from form
+    return this.http.post(environment.server.address + '/modules/new',{
+      simpleName: "SampleModule",
+      packageName: "org.example",
+      groupId: "org.edu",
+      artifactId: "sample-module",
+      version: "SNAPSHOT-1.0.0",
+      inputType: {id:"java.lang.String",simpleName: "String",packageName:"java.lang"},
+      outputType: {id:"java.lang.String",simpleName: "String",packageName:"java.lang"}
+    });
   }
   
   getModules(){
@@ -20,6 +30,7 @@ export class ModuleService {
   }
 
   insertModule(uuid: string){
-    return this.http.put(environment.server.address + '/modules/'+uuid,{});
+    // uuid of module to be inserted
+    return this.http.put(environment.server.address + '/modules/add?target='+globals.activeModule+'&selected='+uuid,{});
   }
 }

@@ -4,16 +4,12 @@
 			<button (click)="initNewModule()">Init New Module</button>
 		</div>
 		<div class="col-sm">
-			<div class="dropdown">
-				<button class="btn btn-secondary dropdown-toggle" type="button"
-					id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true"
-					aria-expanded="false">Select Module ...</button>
-				<div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-					<button class="dropdown-item" type="button" *ngFor="let m of modules" (click)="onSelectModule(m)">{{m.simpleName+'|'+m.uuid}}</button>
-				</div>
-			</div>
 			<button type="button" (click)="addModule()">Add module</button>
 		</div>
-		<div class="col-sm">One of three columns</div>
+		<div class="col-sm">
+			<select class="form-control" (change)="onSelectModule($event)" >
+				<option *ngFor="let m of modules"  [value]="m.uuid">{{m.simpleName+'|'+m.uuid}}</option>
+			</select>
+		</div>
 	</div>
 </div>

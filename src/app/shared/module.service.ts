@@ -31,6 +31,6 @@ export class ModuleService {
 
   insertModule(uuid: string){
     // uuid of module to be inserted
-    return this.http.put(environment.server.address + '/modules/add?target='+globals.activeModule+'&selected='+uuid,{});
+    return this.http.put(environment.server.address + '/modules/add?target='+globals.activeModule+'&selected='+uuid,{},{method:'PUT'});
   }
 }

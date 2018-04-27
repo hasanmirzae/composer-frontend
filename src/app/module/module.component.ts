@@ -77,17 +77,17 @@ export class ModuleComponent implements OnInit {
       .attr("marker-end", "url(#arrow)")
       .attr("x1", function(l) {
         var sourceNode = data.nodes.filter(d => {
-          return d.uuid === l.source;
+          return d.uuid === l.source.uuid && d.index === l.source.index;
         })[0];
-        d3.select(this).attr("source",sourceNode.uuid);
+        d3.select(this).attr("source",sourceNode.uuid+'#'+sourceNode.index);
         d3.select(this).attr("y1", sourceNode.y);
         return sourceNode.x;
       })
       .attr("x2", function(l) {
         var targetNode = data.nodes.filter(d => {
-          return d.uuid === l.target;
+          return d.uuid === l.target.uuid && d.index === l.target.index;
         })[0];
-        d3.select(this).attr("target",targetNode.uuid);
+        d3.select(this).attr("target",targetNode.uuid+'#'+targetNode.index);
         d3.select(this).attr("y2", targetNode.y);
         return targetNode.x;
       })
@@ -100,8 +100,8 @@ export class ModuleComponent implements OnInit {
         d.x += d3.event.dx;
         d.y += d3.event.dy;
         d3.select(this).attr("transform", d => "translate(" + (d.x - RECT_SIZE) + "," + (d.y - RECT_SIZE) + ")");
-        d3.selectAll("line[target='"+d.uuid+"']").attr("x2", d.x).attr("y2", d.y);
-        d3.selectAll("line[source='"+d.uuid+"']").attr("x1", d.x).attr("y1", d.y);
+        d3.selectAll("line[target='"+d.uuid+'#'+d.index+"']").attr("x2", d.x).attr("y2", d.y);
+        d3.selectAll("line[source='"+d.uuid+'#'+d.index+"']").attr("x1", d.x).attr("y1", d.y);
       });
 
 

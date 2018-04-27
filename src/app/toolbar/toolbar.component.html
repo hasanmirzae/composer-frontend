@@ -20,19 +20,19 @@
 			<button (click)="addLink()">Add link</button>
 		</div>
 		<div class="col-sm">
-			<span>From</span> <select class="form-control"
-				(change)="onSelectFrom($event)">
+			<span>From</span> <select class="form-control"  [(ngModel)]="linkFrom"
+				>
 				<option selected>Select link from ...</option>
 				<option *ngFor="let m of moduleComponent.model.nodes"
-					[value]="m.uuid">{{m.simpleName+'|'+m.uuid}}</option>
+					[ngValue]="m">{{m.simpleName+'|'+m.uuid+'|'+m.index}}</option>
 			</select>
 		</div>
 		<div class="col-sm">
-			<span>To</span> <select class="form-control"
-				(change)="onSelectTo($event)">
+			<span>To</span> <select class="form-control" [(ngModel)]="linkTo"
+				>
 				<option selected>Select link to ...</option>
 				<option *ngFor="let m of moduleComponent.model.nodes"
-					[value]="m.uuid">{{m.simpleName+'|'+m.uuid}}</option>
+					[ngValue]="m">{{m.simpleName+'|'+m.uuid+'|'+m.index}}</option>
 			</select>
 		</div>
 		<div class="col-sm">
@@ -45,15 +45,15 @@
 				(change)="setEntryNode($event)">
 				<option selected>Select entry node ...</option>
 				<option *ngFor="let m of moduleComponent.model.nodes"
-					[value]="m.uuid">{{m.simpleName+'|'+m.uuid}}</option>
+					[value]="m.uuid">{{m.simpleName+'|'+m.uuid+'|'+m.index}}</option>
 			</select>
 		</div>
 		<div class="col-sm">
-			<span>Output node</span> <select class="form-control"
+			<span>Output node</span> <select class="form-control" 
 				(change)="setOutputNode($event)">
 				<option selected>Select output node ...</option>
 				<option *ngFor="let m of moduleComponent.model.nodes"
-					[value]="m.uuid">{{m.simpleName+'|'+m.uuid}}</option>
+					[value]="m.uuid">{{m.simpleName+'|'+m.uuid+'|'+m.index}}</option>
 			</select>
 		</div>
 	</div>

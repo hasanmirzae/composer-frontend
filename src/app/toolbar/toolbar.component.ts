@@ -1,5 +1,5 @@
 import { ModuleComponent } from '../module/module.component';
-import { Component, OnInit, Input, HostListener } from '@angular/core';
+import { Component, OnInit, Input, HostListener  } from '@angular/core';
 import {ModuleService} from '../shared/module.service';
 import { globals } from '../globals';
 
@@ -13,8 +13,8 @@ export class ToolbarComponent implements OnInit {
 
   modules: any = [];
   selectedModule: string;
-  linkFrom: string;
-  linkTo: string;
+  linkFrom: any;
+  linkTo: any;
   
   @Input() moduleComponent: ModuleComponent;
   
@@ -51,16 +51,10 @@ export class ToolbarComponent implements OnInit {
     .subscribe(this.loadModules.bind(this) ,console.error,null);
   }
   
-  onSelectFrom(event){
-    this.linkFrom = event.target.value;
-  }
-  
-  onSelectTo(event){
-    this.linkTo = event.target.value;
-  }
   
   addLink(){
-    if (this.linkFrom && this.linkTo && (this.linkFrom !== this.linkTo)){
+    console.log(this.linkFrom.uuid)
+    if (this.linkFrom && this.linkTo && (this.linkFrom.uuid !== this.linkTo.uuid && this.linkFrom.idnex !== this.linkTo.index)){
       this.service.addLink(this.linkFrom, this.linkTo)
         .subscribe(() => this.moduleComponent.update({uuid: globals.activeModule}),console.error, null);
     }

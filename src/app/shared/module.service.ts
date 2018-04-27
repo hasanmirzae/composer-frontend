@@ -38,7 +38,7 @@ export class ModuleService {
     return this.http.post(environment.server.address + '/modules/save', {});
   }
   
-  addLink(from: string, to: string){
+  addLink(from: any, to: any){
     return this.http.post(environment.server.address + '/modules/links', {source: from, target: to});
   }
   

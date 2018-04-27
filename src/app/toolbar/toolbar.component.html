@@ -10,28 +10,52 @@
 			<button type="button" (click)="addModule()">Add module</button>
 		</div>
 		<div class="col-sm">
-			<select class="form-control" (change)="onSelectModule($event)" >
-				<option *ngFor="let m of modules"  [value]="m.uuid">{{m.simpleName+'|'+m.uuid}}</option>
+			<select class="form-control" (change)="onSelectModule($event)">
+				<option *ngFor="let m of modules" [value]="m.uuid">{{m.simpleName+'|'+m.uuid}}</option>
 			</select>
 		</div>
 	</div>
-		<div class="row">
+	<div class="row">
 		<div class="col-sm">
 			<button (click)="addLink()">Add link</button>
 		</div>
 		<div class="col-sm">
-			<span>From</span>
-			<select class="form-control" (change)="onSelectFrom($event)" >
-				<option *ngFor="let m of modules"  [value]="m.uuid">{{m.simpleName+'|'+m.uuid}}</option>
+			<span>From</span> <select class="form-control"
+				(change)="onSelectFrom($event)">
+				<option selected>Select link from ...</option>
+				<option *ngFor="let m of moduleComponent.model.nodes"
+					[value]="m.uuid">{{m.simpleName+'|'+m.uuid}}</option>
 			</select>
 		</div>
 		<div class="col-sm">
-			<span>To</span>
-			<select class="form-control" (change)="onSelectTo($event)" >
-				<option *ngFor="let m of modules"  [value]="m.uuid">{{m.simpleName+'|'+m.uuid}}</option>
+			<span>To</span> <select class="form-control"
+				(change)="onSelectTo($event)">
+				<option selected>Select link to ...</option>
+				<option *ngFor="let m of moduleComponent.model.nodes"
+					[value]="m.uuid">{{m.simpleName+'|'+m.uuid}}</option>
 			</select>
 		</div>
-		<div class="col-sm"></div>
+		<div class="col-sm">
+			<button (click)="compose()">Compose</button>
+		</div>
 	</div>
-	
+	<div class="row">
+		<div class="col-sm">
+			<span>Entry node</span> <select class="form-control"
+				(change)="setEntryNode($event)">
+				<option selected>Select entry node ...</option>
+				<option *ngFor="let m of moduleComponent.model.nodes"
+					[value]="m.uuid">{{m.simpleName+'|'+m.uuid}}</option>
+			</select>
+		</div>
+		<div class="col-sm">
+			<span>Output node</span> <select class="form-control"
+				(change)="setOutputNode($event)">
+				<option selected>Select output node ...</option>
+				<option *ngFor="let m of moduleComponent.model.nodes"
+					[value]="m.uuid">{{m.simpleName+'|'+m.uuid}}</option>
+			</select>
+		</div>
+	</div>
+
 </div>

@@ -11,7 +11,7 @@ import { globals } from '../globals';
 })
 export class ModuleComponent implements OnInit {
 
-  model: any = {};
+  model: any = {nodes: []};
   
   constructor(private moduleService: ModuleService) {}
 
@@ -39,6 +39,9 @@ export class ModuleComponent implements OnInit {
     });
   }
   
+  compose(){
+    this.moduleService.compose();
+  }
 
   init(data) {
     this.model = data;
@@ -58,14 +61,13 @@ export class ModuleComponent implements OnInit {
       .attr("id", "arrow")
       .attr("markerWidth", RECT_SIZE)
       .attr("markerHeight", RECT_SIZE)
-      .attr("refX", RECT_SIZE/2.5)
+      .attr("refX", RECT_SIZE/2.1)
       .attr("refY", 5)
       .attr("orient", "auto")
       .attr("markerUnits", "strokeWidth")
       .append("path")
       .attr("d", "M 0 0 L 10 5 L 0 10 z")
       .attr("fill", "#f00");
-
 
     const links = svg.selectAll("link")
       .data(data.links)
@@ -91,15 +93,15 @@ export class ModuleComponent implements OnInit {
       })
       .attr("fill", "none")
       .attr("stroke", "white")
-      .attr("stroke-width","6px");
+      .attr("stroke-width","4px");
 
     const drag = d3.behavior.drag()
       .on("drag", function(d, i) {
         d.x += d3.event.dx;
         d.y += d3.event.dy;
         d3.select(this).attr("transform", d => "translate(" + (d.x - RECT_SIZE) + "," + (d.y - RECT_SIZE) + ")");
-        d3.select("line[target="+d.uuid+"]").attr("x2", d.x).attr("y2", d.y);
-        d3.select("line[source="+d.uuid+"]").attr("x1", d.x).attr("y1", d.y);
+        d3.selectAll("line[target='"+d.uuid+"']").attr("x2", d.x).attr("y2", d.y);
+        d3.selectAll("line[source='"+d.uuid+"']").attr("x1", d.x).attr("y1", d.y);
       });
 
 

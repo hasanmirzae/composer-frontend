@@ -41,4 +41,17 @@ export class ModuleService {
   addLink(from: string, to: string){
     return this.http.post(environment.server.address + '/modules/links', {source: from, target: to});
   }
+  
+  compose(){
+    return this.http.post(environment.server.address + '/modules/compose', {});
+  }
+  
+  setOutputNode(uuid: string){
+    return this.http.post(environment.server.address + '/modules/output/'+uuid, {});
+  }
+
+
+  setEntryNode(uuid: string){
+    return this.http.post(environment.server.address + '/modules/entry/'+uuid, {});
+  }
 }

@@ -21,8 +21,15 @@ export class ToolbarComponent implements OnInit {
   constructor(private service: ModuleService) { }
 
   ngOnInit() {
+    this.loadModules();
+  }
+  
+  loadModules(){
     this.service.getModules()
-    .subscribe(modules => this.modules = modules, console.error, null);  
+    .subscribe(modules => {
+      this.modules = modules || [];
+      this.selectedModule = this.modules.length > 0 ? this.modules[0].uuid : null;
+    }, console.error, null);  
   }
   
   initNewModule(){
@@ -41,27 +48,37 @@ export class ToolbarComponent implements OnInit {
   
   save(){
     this.service.save()
-    .subscribe(console.log,console.error,null);
+    .subscribe(this.loadModules.bind(this) ,console.error,null);
   }
   
   onSelectFrom(event){
     this.linkFrom = event.target.value;
-    console.log(this.linkFrom);
   }
   
   onSelectTo(event){
     this.linkTo = event.target.value;
-    console.log(this.linkTo);
   }
   
   addLink(){
-      console.log('before addLink() called')
     if (this.linkFrom && this.linkTo && (this.linkFrom !== this.linkTo)){
-      console.log('addLink() called')
       this.service.addLink(this.linkFrom, this.linkTo)
         .subscribe(() => this.moduleComponent.update({uuid: globals.activeModule}),console.error, null);
     }
   }
   
+  compose(){
+    this.service.compose()
+      .subscribe(console.log, console.error,null);
+  }
+  
+  setEntryNode(event){
+    this.service.setEntryNode(event.target.value)
+      .subscribe(console.log, console.error,null);
+  }
+
+    setOutputNode(event){
+    this.service.setOutputNode(event.target.value)
+      .subscribe(console.log, console.error,null);
+  }
 
 }

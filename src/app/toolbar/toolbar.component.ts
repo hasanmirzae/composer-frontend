@@ -55,7 +55,7 @@ export class ToolbarComponent implements OnInit {
   
   
   addLink(){
-    if (this.linkFrom && this.linkTo && ((this.linkFrom.uuid === this.linkTo.uuid) && (this.linkFrom.index === this.linkTo.index)){
+    if (this.linkFrom && this.linkTo && (this.linkFrom.uuid === this.linkTo.uuid) && (this.linkFrom.index === this.linkTo.index)){
       console.log("Link to self not allowd!");
       return;
     } else if (this.linkFrom && this.linkTo){

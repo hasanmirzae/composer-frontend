@@ -52,7 +52,7 @@ export class ModuleComponent implements OnInit {
     d3.select("#module-window").select("svg").remove();
     const svg = d3.select("#module-window")
       .append("svg")
-      .attr("width", 1200)
+      .attr("width", "100%")
       .attr("height", 800);
 
     // define arrow

@@ -1,3 +1,17 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<app-toolbar [moduleComponent]="moduleComponent"></app-toolbar>
-<app-module #moduleComponent></app-module>
+<div class="container">
+	<div class="row">
+			<app-toolbar [moduleComponent]="moduleComponent"></app-toolbar>
+	</div>
+	<div class="row">
+		<div class="col-md-4">
+			<div id="module-details">
+				<app-module-details></app-module-details>
+			</div>
+		</div>
+		<div class="col-md-8">
+			<app-module #moduleComponent></app-module>
+		</div>
+		
+	</div>
+</div>

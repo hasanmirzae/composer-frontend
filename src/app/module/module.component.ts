@@ -28,7 +28,7 @@ export class ModuleComponent implements OnInit {
   }
 
   getTitle(node) {
-    return node.groupId + '\n' + node.artifactId + '\n' + node.version+'\n'+node.uuid;
+    return node.groupId + '\n' + node.artifactId + '\n' + node.version+'\n'+node.uuid+'#'+node.index;
   }
   
   

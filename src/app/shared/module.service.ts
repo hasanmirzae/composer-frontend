@@ -46,12 +46,12 @@ export class ModuleService {
     return this.http.post(environment.server.address + '/modules/compose', {});
   }
   
-  setOutputNode(uuid: string){
-    return this.http.post(environment.server.address + '/modules/output/'+uuid, {});
+  setOutputNode(node: any){
+    return this.http.post(environment.server.address + '/modules/output', node);
   }
 
 
-  setEntryNode(uuid: string){
-    return this.http.post(environment.server.address + '/modules/entry/'+uuid, {});
+  setEntryNode(node: any){
+    return this.http.post(environment.server.address + '/modules/entry', node);
   }
 }

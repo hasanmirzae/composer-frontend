@@ -15,6 +15,8 @@ export class ToolbarComponent implements OnInit {
   selectedModule: string;
   linkFrom: any;
   linkTo: any;
+  entryNode: any;
+  outputNode: any;
   
   @Input() moduleComponent: ModuleComponent;
   
@@ -48,16 +50,19 @@ export class ToolbarComponent implements OnInit {
   
   save(){
     this.service.save()
-    .subscribe(this.loadModules.bind(this) ,console.error,null);
+    .subscribe(this.loadModules.bind(this), console.error, null);
   }
   
   
   addLink(){
-    console.log(this.linkFrom.uuid)
-    if (this.linkFrom && this.linkTo && (this.linkFrom.uuid !== this.linkTo.uuid && this.linkFrom.idnex !== this.linkTo.index)){
-      this.service.addLink(this.linkFrom, this.linkTo)
-        .subscribe(() => this.moduleComponent.update({uuid: globals.activeModule}),console.error, null);
+    if (this.linkFrom && this.linkTo && ((this.linkFrom.uuid === this.linkTo.uuid) && (this.linkFrom.index === this.linkTo.index)){
+      console.log("Link to self not allowd!");
+      return;
+    } else if (this.linkFrom && this.linkTo){
+     this.service.addLink(this.linkFrom, this.linkTo)
+        .subscribe(() => this.moduleComponent.update({uuid: globals.activeModule}), console.error, null);
     }
+
   }
   
   compose(){
@@ -66,12 +71,12 @@ export class ToolbarComponent implements OnInit {
   }
   
   setEntryNode(event){
-    this.service.setEntryNode(event.target.value)
+    this.service.setEntryNode(this.entryNode)
       .subscribe(console.log, console.error,null);
   }
 
     setOutputNode(event){
-    this.service.setOutputNode(event.target.value)
+    this.service.setOutputNode(this.outputNode)
       .subscribe(console.log, console.error,null);
   }
 

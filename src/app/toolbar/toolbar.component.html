@@ -41,19 +41,19 @@
 	</div>
 	<div class="row">
 		<div class="col-sm">
-			<span>Entry node</span> <select class="form-control"
+			<span>Entry node</span> <select class="form-control" [(ngModel)]="entryNode"
 				(change)="setEntryNode($event)">
 				<option selected>Select entry node ...</option>
 				<option *ngFor="let m of moduleComponent.model.nodes"
-					[value]="m.uuid">{{m.simpleName+'|'+m.uuid+'|'+m.index}}</option>
+					[ngValue]="m">{{m.simpleName+'|'+m.uuid+'|'+m.index}}</option>
 			</select>
 		</div>
 		<div class="col-sm">
-			<span>Output node</span> <select class="form-control" 
+			<span>Output node</span> <select class="form-control" [(ngModel)]="outputNode"
 				(change)="setOutputNode($event)">
 				<option selected>Select output node ...</option>
 				<option *ngFor="let m of moduleComponent.model.nodes"
-					[value]="m.uuid">{{m.simpleName+'|'+m.uuid+'|'+m.index}}</option>
+					[ngValue]="m">{{m.simpleName+'|'+m.uuid+'|'+m.index}}</option>
 			</select>
 		</div>
 	</div>

@@ -49,7 +49,7 @@ export class ToolbarComponent implements OnInit {
   }
   
   save(){
-    this.service.save()
+    this.moduleComponent.save()
     .subscribe(this.loadModules.bind(this), console.error, null);
   }
   

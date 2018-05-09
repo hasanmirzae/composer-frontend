@@ -1,11 +1,12 @@
-import {Injectable} from '@angular/core';
+import {Injectable, Input} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from 'environments/environment';
 import { globals } from '../globals';
+import { ModuleComponent } from '../module/module.component';
 
 @Injectable()
 export class ModuleService {
-
+  
   constructor(private http: HttpClient) {}
 
   getData(uuid: string){
@@ -34,8 +35,8 @@ export class ModuleService {
     return this.http.put(environment.server.address + '/modules/add/'+uuid,{});
   }
   
-  save(){
-    return this.http.post(environment.server.address + '/modules/save', {});
+  save(model){
+    return this.http.post(environment.server.address + '/modules/save', model);
   }
   
   addLink(from: any, to: any){

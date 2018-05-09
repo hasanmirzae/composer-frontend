@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Input} from '@angular/core';
 import * as d3 from 'd3';
 import {ModuleService} from '../shared/module.service';
 import { globals } from '../globals';
+import { ModuleDetailsComponent } from '../module-details/module-details.component';
 
 @Component({
   selector: 'app-module',
@@ -11,6 +12,7 @@ import { globals } from '../globals';
 })
 export class ModuleComponent implements OnInit {
 
+  @Input() moduleDetailsComponent: ModuleDetailsComponent;
   model: any = {nodes: []};
   
   constructor(private moduleService: ModuleService) {}
@@ -21,10 +23,19 @@ export class ModuleComponent implements OnInit {
   
   }
   
+  save(){
+    this.model.simpleName = this.moduleDetailsComponent.simpleName;
+    this.model.groupId = this.moduleDetailsComponent.groupId;
+    this.model.artifactId = this.moduleDetailsComponent.artifactId;
+    this.model.version = this.moduleDetailsComponent.version;
+    return this.moduleService.save(this.model);
+  }
+  
   update(model){
     this.moduleService
       .getData(model.uuid)
       .subscribe(this.init.bind(this), e => console.error);
+    this.moduleDetailsComponent.init(model);
   }
 
   getTitle(node) {

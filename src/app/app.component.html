@@ -6,11 +6,11 @@
 	<div class="row">
 		<div class="col-md-4">
 			<div id="module-details">
-				<app-module-details></app-module-details>
+				<app-module-details #moduleDetailsComponent></app-module-details>
 			</div>
 		</div>
 		<div class="col-md-8">
-			<app-module #moduleComponent></app-module>
+			<app-module #moduleComponent [moduleDetailsComponent]="moduleDetailsComponent"></app-module>
 		</div>
 		
 	</div>

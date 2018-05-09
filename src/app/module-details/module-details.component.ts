@@ -11,14 +11,23 @@ import { globals } from '../globals';
 })
 export class ModuleDetailsComponent implements OnInit {
 
-  @Input() moduleComponent: ModuleComponent;
-  simpleName: string;
-  
-  constructor(private service: ModuleService) { 
+  model: any = {};
+  constructor(private service: ModuleService){ 
   }
 
+  simpleName: string = '';
+  groupId: string = '';
+  artifactId: string = '';
+  version: string = '';
+  
   ngOnInit() {
-    this.simpleName = this.moduleComponent.model.simpleName;
+  }
+  
+  init(model: any){
+    this.simpleName = model.simpleName;
+    this.groupId = model.groupId;
+    this.artifactId = model.artifactId;
+    this.version = model.version;
   }
 
 }

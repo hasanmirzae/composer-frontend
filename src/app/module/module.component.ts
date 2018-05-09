@@ -39,7 +39,7 @@ export class ModuleComponent implements OnInit {
   }
 
   getTitle(node) {
-    return node.groupId + '\n' + node.artifactId + '\n' + node.version+'\n'+node.uuid+'#'+node.index;
+    return node.groupId + '.' + node.simpleName  + '\n' + node.artifactId + '\n' + node.version+'\n'+node.uuid+'#'+node.index;
   }
   
   
@@ -126,9 +126,8 @@ export class ModuleComponent implements OnInit {
     
 
     // add title
-    nodes
-      .append("title")
-      .text(this.getTitle);
+    nodes.append("title").text(this.getTitle);
+    nodes.append("text").text(d => d.groupId+'.'+d.simpleName);
 
     const rects = nodes
       .append("rect")
